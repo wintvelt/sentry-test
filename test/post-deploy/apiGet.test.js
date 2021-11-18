@@ -10,18 +10,18 @@ test("API GET OK", async () => {
         result = await axios.get(getUrl)
         if (result.status > 299) throw new Error(result.statusText)
     } catch (error) {
-        console.error(error.message)
+        throw new Error(error.message)
     }
-    console.log({result})
+    console.log(result.data)
 })
 
 test("API GET ERROR", async () => {
     let result
     try {
-        result = await axios.get(getUrl+'/id=YES')
+        result = await axios.get(getUrl+'/?id=YES')
         if (result.status > 299) throw new Error(result.statusText)
     } catch (error) {
-        result = error
+        result = error.response
     }
-    console.log({result})
+    console.log(result.data)
 })
