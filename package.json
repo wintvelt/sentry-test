@@ -28,7 +28,6 @@
     "@middy/http-json-body-parser": "^2.5.2",
     "@middy/sqs-json-body-parser": "^2.5.3",
     "@middy/validator": "^2.5.2",
-    "@sentry/node": "^6.15.0",
     "@serverless-stack/cli": "0.50.2",
     "@serverless-stack/resources": "0.50.2"
   }
