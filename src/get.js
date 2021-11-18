@@ -8,6 +8,7 @@ import cors from '@middy/http-cors'
 Sentry.AWSLambda.init({
     dsn: "https://fc657387286e49cb85c73e841794f225@o1071755.ingest.sentry.io/6071342",
     tracesSampleRate: 1.0,
+    environment: process.env.STAGE
 });
 
 const baseHandler = async (event) => {
