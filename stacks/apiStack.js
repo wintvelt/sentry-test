@@ -15,7 +15,8 @@ export default class ApiStack extends sst.Stack {
         this.api = new sst.Api(this, "Api", {
             defaultFunctionProps: {
                 environment: {
-                    AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
+                    AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1,
+                    STAGE: process.env.STAGE // for sentry
                 },
             },
             defaultThrottlingRateLimit: 2000,
