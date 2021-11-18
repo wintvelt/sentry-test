@@ -21,7 +21,7 @@ test("API GET ERROR", async () => {
         result = await axios.get(getUrl+'/id=YES')
         if (result.status > 299) throw new Error(result.statusText)
     } catch (error) {
-        result = error.response
+        result = error
     }
     console.log({result})
 })
