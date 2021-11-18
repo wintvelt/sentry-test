@@ -30,10 +30,9 @@ const baseHandler = async (event) => {
 }
 
 // export const handler = Sentry.AWSLambda.wrapHandler(baseHandler)
-export const handler = Sentry.AWSLambda.wrapHandler(
-    middy(baseHandler)
+export const handler =
+    middy(Sentry.AWSLambda.wrapHandler(baseHandler))
         .use(errorLogger())
         .use(httpErrorHandler({ fallbackMessage: 'server error' }))
         .use(cors())
-)
-// export const handler =
+
