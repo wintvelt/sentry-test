@@ -1,15 +1,12 @@
 // handler for GET route
 import Sentry from "@sentry/serverless"
-import sentryErrorHandler from '@joblocal/middy-sentry-error-handler'
 import middy from '@middy/core'
 import errorLogger from '@middy/error-logger'
 import httpErrorHandler from '@middy/http-error-handler'
 import cors from '@middy/http-cors'
 
-const dsn = "https://fc657387286e49cb85c73e841794f225@o1071755.ingest.sentry.io/6071342"
-
 Sentry.AWSLambda.init({
-    dsn,
+    dsn: "https://fc657387286e49cb85c73e841794f225@o1071755.ingest.sentry.io/6071342",
     tracesSampleRate: 1.0,
     environment: process.env.STAGE
 });
@@ -34,12 +31,8 @@ const baseHandler = async (event) => {
 
 // export const handler = Sentry.AWSLambda.wrapHandler(baseHandler)
 export const handler =
-    // middy(Sentry.AWSLambda.wrapHandler(baseHandler))
-    middy(baseHandler)
+    middy(Sentry.AWSLambda.wrapHandler(baseHandler))
         .use(errorLogger())
-        .use(sentryErrorHandler({
-            dsn,
-        }))
         .use(httpErrorHandler({ fallbackMessage: 'server error' }))
         .use(cors())
 
