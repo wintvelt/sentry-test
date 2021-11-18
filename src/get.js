@@ -3,41 +3,6 @@ import middy from '@middy/core'
 import errorLogger from '@middy/error-logger'
 import httpErrorHandler from '@middy/http-error-handler'
 import cors from '@middy/http-cors'
-import { dynamo } from "./libs/dynamo-lib";
-
-const getById = async (id) => {
-    const queryParams = {
-        TableName: process.env.TABLE_NAME,
-        IndexName: "dependencyIndex",
-        KeyConditionExpression: "dependency = :dep",
-        ExpressionAttributeValues: {
-            ":dep": id
-        },
-    };
-
-    let result
-    try {
-        result = await dynamo.query(queryParams)
-    } catch (error) {
-        throw new Error(error.message);
-    }
-    return result.Items
-}
-
-const getAll = async () => {
-    const params = {
-        TableName: process.env.TABLE_NAME,
-        ProjectionExpression: "packageStage",
-    };
-
-    let result
-    try {
-        result = await dynamo.scan(params)
-    } catch (error) {
-        throw new Error(error.message);
-    }
-    return [...new Set(result.Items.map(it => it.packageStage))]
-}
 
 const baseHandler = async (event) => {
     const id = event.queryStringParameters?.id // decoding already done
@@ -45,13 +10,12 @@ const baseHandler = async (event) => {
     let result
     try {
         if (id) {
-            result = await getById(id)
+            throw new Error('We created an error')
         } else {
-            result = await getAll()
+            result = 'We have a winner'
         }
 
     } catch (error) {
-        console.error(error.message);
         throw new Error(error.message);
     }
 

@@ -1,29 +1,27 @@
 //test get api endpoint
 import axios from 'axios'
-import urls from '../../npm/apiEndpoints'
+import urls from '../../npm-TODO/apiEndpoints'
 
 const getUrl = urls.get.dev // only test on dev stack
-const Authorization = `Basic ${process.env.SECRET_PUBLISH_TOKEN}`
 
-test("API GET retrieve list of publications", async () => {
+test("API GET OK", async () => {
     let result
     try {
-        result = await axios.get(getUrl, { headers: { Authorization } })
+        result = await axios.get(getUrl)
         if (result.status > 299) throw new Error(result.statusText)
     } catch (error) {
         console.error(error.message)
     }
-    expect(result).toHaveProperty("data")
-    expect(Array.isArray(result.data)).toBe(true)
+    console.log({result})
 })
 
-test("API GET with wrong Auth", async () => {
+test("API GET ERROR", async () => {
     let result
     try {
-        result = await axios.get(getUrl, { headers: { Authorization: 'FOUT' } })
+        result = await axios.get(getUrl+'/id=YES')
         if (result.status > 299) throw new Error(result.statusText)
     } catch (error) {
         result = error.response
     }
-    expect(result.status).toBe(401)
+    console.log({result})
 })

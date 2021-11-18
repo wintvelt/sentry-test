@@ -4,7 +4,7 @@ import prodStageOutput from './dev-stack-output.json'
 
 export default {
     get: {
-        dev: devStageOutput['dev-sst-test-api']?.url,
-        prod: prodStageOutput['prod-sst-test-api']?.url,
+        dev: devStageOutput['dev-sentry-test-api']?.url,
+        prod: prodStageOutput['prod-sentry-test-api']?.url,
     }
 }
